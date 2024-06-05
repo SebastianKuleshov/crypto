@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block wallet %}            
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "wallet:wallet_list" user.pk %}">Wallet</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "wallet:converter" %}">Converter</a>
+    </li>
+{% endblock wallet %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Currency Converter</div>
+                    <div class="card-body">
+                        <form method="post" class="form">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group">
+                                    {{ field.label }}:
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" name="check" class="btn btn-success">Check</button>
+                            <button type="submit" name="convert" class="btn btn-primary">Convert</button>  
+                        </form>
+                    </div>
+                </div>
+                {% if converted %}
+                    <div class="mt-3">
+                        <div class="alert alert-success">
+                            <strong>{{ converted }}</strong>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if success %}
+                    <div class="mt-3">
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

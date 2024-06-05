@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Add Tokens To Storage</h1>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    
+    <div class="row">
+        {% for token in token_list %}
+            <div class="col-md-4">
+                <div class="card" style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ token.token }}</h5>
+                        <p class="card-text">Count: {{ token.count }}</p>
+                        <div class="btn-group" role="group" aria-label="Token Actions">
+                            <a href="{% url 'storage:update' token.pk %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'storage:delete' token.pk %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

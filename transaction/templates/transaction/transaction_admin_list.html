@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="row align-items-center">
+            <div class="col mr-1">
+                <h3 class="text-primary">Transactions</h3>
+            </div>
+            <div class="col text-right mr-4">
+                <a href="{% url 'transaction:create' %}" class="btn btn-primary">ASK for transaction</a>
+            </div>
+        </div>
+        <div class="col text-right mr-4">
+            <a href="{% url 'transaction:unwatched' %}" class="btn btn-primary">See unwatched transaction</a>
+        </div>
+        {% for transaction in transactions %}
+            <div class="card mb-3 py-2 {% if transaction.accepted == True %}bg-success text-white{% elif transaction.accepted == False %}bg-danger text-white{% elif transaction.accepted == None %}bg-info text-white{% else %}bg-light{% endif %}">
+                <div class="card-body py-1">
+                    <h5 class="mb-1">TOKEN: {{ transaction.token }}, COUNT: {{ transaction.count }}, USER: {{ transaction.user }}</h5>
+                    {% if transaction.accepted == None %}
+                        <a href="{% url 'transaction:set_status' transaction.pk 0 %}" class="float-right ml-2">                    
+                            <i class="bi bi-x-circle text-white"></i>
+                        </a>
+                        <a href="{% url "transaction:set_status" transaction.pk 1 %}" class="float-right">                    
+                            <i class="bi bi-check-circle text-white"></i>
+                        </a>
+                    {% endif %}
+                </div>                
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

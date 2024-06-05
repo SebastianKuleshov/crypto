@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="row align-items-center">
+            <div class="col mr-1">
+                <h3 class="text-primary">Transactions</h3>
+            </div>
+            <div class="col text-right mr-4">
+                <a href="{% url 'transaction:create' %}" class="btn btn-primary">ASK for transaction</a>
+            </div>
+        </div>
+        {% for transaction in transactions %}
+            <div class="card mb-3 py-2 {% if transaction.accepted == True %}bg-success text-white{% elif transaction.accepted == False %}bg-danger text-white{% elif transaction.accepted == None %}bg-info text-white{% else %}bg-light{% endif %}">
+                <div class="card-body py-1">
+                    <h5 class="mb-1">TOKEN: {{ transaction.token }}, COUNT: {{ transaction.count }}</h5>
+                </div>                
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

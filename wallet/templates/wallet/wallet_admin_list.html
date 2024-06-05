@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Users wallets</h3>
+    <div class="row">
+        <div class="col-md">
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item">
+                        <a href="{% url 'wallet:wallet_list' user.pk %}" style="font-size: 20px;">{{ user }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
